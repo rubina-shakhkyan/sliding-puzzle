@@ -1,40 +1,47 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
-import { Container } from "./WelcomeForm.styles";
-import { Title, VerticalSpacer } from "../shared/shared.styles";
+import { Container, PrimaryTitle, VerticalSpacer } from "../shared/shared.styles";
+import { Button, FormControl, FormGroup, TextField, useTheme } from "@mui/material";
 
 interface WelcomeFormProps {
-  onSubmit(puzzleSize: number): void;
+  onSubmit(puzzleSize: string): void;
 }
 export const WelcomeForm = ({ onSubmit }: WelcomeFormProps) => {
-  const [puzzleSize, setPuzzleSize] = useState(0);
+  const theme = useTheme();
+  const [puzzleSize, setPuzzleSize] = useState("");
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    onSubmit(puzzleSize);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPuzzleSize(event.target.value);
+    
+  };
 
   return (
     <Container>
-      <Title>Welcome To The Sliding Puzzle Challenge!</Title>
-       {/* ToDo: Wrap the form in a nice div with a background  */}
-      <TextField
-        type="number"
-        label="Number of tiles"
-        InputProps={{
-          inputProps: {
-            max: 12,
-            min: 3,
-          },
-        }}
-        value={puzzleSize}
-        onChange={(event) => setPuzzleSize(parseInt(event.target.value))}
-      />
-      <VerticalSpacer />
-      <Button
-        onClick={() => onSubmit(puzzleSize)}
-        disabled={!puzzleSize}
-        variant="contained"
-        color="primary"
-        type="submit"
-      >
-        Submit
-      </Button>
+      <PrimaryTitle theme={theme}>Welcome To The Sliding Puzzle Challenge!</PrimaryTitle>
+      <VerticalSpacer size={36} />
+      <FormControl component="form" onSubmit={handleSubmit}>
+        <FormGroup>
+          <TextField
+            type="number"
+            label="Number of tiles"
+            helperText="Please enter a number between 3 and 20"
+            required
+            inputProps={{
+              min: 3,
+              max: 20,
+            }}
+            value={puzzleSize}
+            onChange={handleInputChange}
+          />
+          <VerticalSpacer size={24} />
+          <Button variant="outlined" color="primary" type="submit">
+            Submit
+          </Button>
+        </FormGroup>
+      </FormControl>
     </Container>
   );
 };

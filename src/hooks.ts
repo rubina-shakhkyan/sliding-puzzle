@@ -47,8 +47,9 @@ export const useShuffledTiles = (puzzleSize: number) => {
   return {
     emptyIndex,
     isSolved,
+    moves,
     tiles,
     shuffle,
     moveTile,
-  } as const;
+  };
 };

@@ -1,13 +1,12 @@
 # Sliding Puzzle project with React JS
 
-The project includes 2 basic components, which are:
-
+    The project includes 2 main components, which are:
 - **The Form Component**:
     This component displays a number input to enter the dimensions of the sliding puzzle. By pressing the button you can submit the form and start the game.
 
 - **The Puzzle Component**
     The main component, which is a sliding puzzle game. The component includes the puzzle itself and a shuffle button.
-    The tiles are shuffled on the first render, and can be re-shuffled any time. The shuffling algorithm ensures that the puzzle is alway solvable, by checking the number of inversions. According to the Sliding Puzzle documentation, given that the gap(empty tile) is in the last row, it is always solvable if the number of inversions is even. After solving the puzzle, the user will see a feedback of how long it took them to save the puzzle.
+    The tiles are shuffled on the first render, and can be re-shuffled any time. The shuffling algorithm ensures that the puzzle is alway solvable, by checking the number of inversions. According to the Sliding Puzzle documentation, given that the gap(empty tile) is in the last row, it is always solvable if the number of inversions is even. After solving the puzzle, the user will see a feedback of how many moves it took them to save the puzzle.
 
 ## The Approach
 

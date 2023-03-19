@@ -1,24 +1,57 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { Container, Gap, PuzzleGrid, Tile } from "./SliderPuzzle.styles";
+import React, { useEffect, useMemo, useState } from "react";
+import { Button, useTheme } from "@mui/material";
+import { Gap, PuzzleGrid, Tile } from "./SliderPuzzle.styles";
 import { useShuffledTiles } from "../../hooks";
-import { Title, VerticalSpacer } from "../shared/shared.styles";
+import { Container, PrimaryTitle, SecondaryTitle, VerticalSpacer } from "../shared/shared.styles";
+import { config, useSpring } from "react-spring";
+import { SOLVED_PUZZLE, START_SOLVING } from "../../constants";
 
 export const SlidingPuzzle: React.FC<{ puzzleSize: number }> = ({
   puzzleSize = 4,
 }) => {
-  const { emptyIndex, tiles, moveTile, shuffle } = useShuffledTiles(puzzleSize);
-  // ToDo: add a timer & feedback when the puzzle is solved
-  // ToDo: Make the grid look nice when many tiles
+  const theme = useTheme();
+  const { emptyIndex, isSolved, moves, tiles, moveTile, shuffle } =
+    useShuffledTiles(puzzleSize);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  const tileColor = useMemo(
+    () => `#${Math.random().toString(16).substr(-6)}`,
+    []
+  );
+
+  const puzzleGridAnimation = useSpring({
+    transform: shouldAnimate ? "rotate(5deg)" : "rotate(0deg)",
+    config: config.default,
+  });
+
+  useEffect(() => {
+    if (isSolved) {
+      setShouldAnimate(true);
+      setTimeout(() => {
+        setShouldAnimate(false);
+      }, 1000);
+    }
+  }, [isSolved]);
+
   return (
     <Container>
-      <Title> {`Let's Solve It: A ${puzzleSize}x${puzzleSize} Sliding Puzzle Challenge`}</Title>
-      <PuzzleGrid puzzleSize={puzzleSize}>
+    <PrimaryTitle  theme={theme}>
+        {`${
+          isSolved ? SOLVED_PUZZLE : START_SOLVING
+        } ${puzzleSize}x${puzzleSize} Sliding Puzzle Challenge`}
+      </PrimaryTitle>
+      <SecondaryTitle theme={theme}>Moves: {moves}</SecondaryTitle>
+      <PuzzleGrid puzzleSize={puzzleSize} style={puzzleGridAnimation}>
         {tiles.map((value, index) =>
           index === emptyIndex ? (
             <Gap key={index} />
           ) : (
-            <Tile key={index} onClick={() => moveTile(index)}>
+            <Tile
+              key={index}
+              puzzleSize={puzzleSize}
+              backgroundColor={tileColor}
+              onClick={() => moveTile(index)}
+            >
               {value + 1}
             </Tile>
           )

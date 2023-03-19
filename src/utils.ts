@@ -1,4 +1,6 @@
 //   The puzzle is is solvable, if the number of inversions is even given that the gap is always in the last row initially
+// ToDo: Random start locations - so the gap can be in any row
+// Not working correctly 2x2
 export const isSolvable = (tiles: number[]) => {
   const puzzleSize = Math.sqrt(tiles.length);
   const numInversions = tiles.reduce((acc, tile, index) => {
