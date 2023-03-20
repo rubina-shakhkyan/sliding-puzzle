@@ -4,9 +4,15 @@
 - **The Form Component**:
     This component displays a number input to enter the dimensions of the sliding puzzle. By pressing the button you can submit the form and start the game.
 
+<img width="683" alt="Screenshot 2023-03-19 at 22 55 18" src="https://user-images.githubusercontent.com/64727687/226327950-0158a589-7ffc-4d11-b154-213eebfe1feb.png">
+
+
 - **The Puzzle Component**
     The main component, which is a sliding puzzle game. The component includes the puzzle itself and a shuffle button.
-    The tiles are shuffled on the first render, and can be re-shuffled any time. The shuffling algorithm ensures that the puzzle is alway solvable, by checking the number of inversions. According to the Sliding Puzzle documentation, given that the gap(empty tile) is in the last row, it is always solvable if the number of inversions is even. After solving the puzzle, the user will see a feedback of how many moves it took them to save the puzzle.
+    The tiles are shuffled on the first render, and can be re-shuffled any time. The shuffling algorithm ensures that the puzzle is alway solvable, by checking the number of inversions. According to the Sliding Puzzle documentation, given the gap(empty tile)row being and the number of inversions. After solving the puzzle, the user will see a feedback of how many moves it took them to save the puzzle.
+
+<img width="683" alt="Screenshot 2023-03-19 at 22 55 30" src="https://user-images.githubusercontent.com/64727687/226328154-1f097b13-4b61-460c-be91-ac28cd27ac40.png">
+
 
 ## The Approach
 
