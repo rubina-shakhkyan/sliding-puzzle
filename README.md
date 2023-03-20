@@ -22,19 +22,20 @@
 ### Testing
    Unit text coverage was added for the `utils` and `hooks`, and `snapshot` testing was added for the styled components.
 
-## Available Scripts
-
-   In the project directory, you can run:
-
-### `yarn start`
-
-   Runs the app in the development mode.\
-   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `yarn test`
+  `yarn start`
 
    Runs the Storybook and Jest test suites.
-   `yarn test:jest` and `yarn test:storybook` can be used for running only unit or Snapshot tests respectively.
+   `yarn test:jest` can be used for running only unit tests.
+
+### Available Scripts
+
+   `yarn-format` - Format the project files based on `prettier` rules.
+   `yarn storybook` - View visual component snapshots.
+   
+### Future Improvement Ideas
+  - Storing the puzzle in the app state to support restarting the puzzle.
+
+
 
 
  
