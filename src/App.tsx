@@ -4,12 +4,14 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./design-system";
 
 const App = () => {
-  // ToDo: Should be able to get back to the form
   const [puzzleSize, setPuzzleSize] = useState<string>("");
   return (
     <ThemeProvider theme={theme}>
       {puzzleSize ? (
-        <SlidingPuzzle puzzleSize={parseInt(puzzleSize)} />
+        <SlidingPuzzle
+          puzzleSize={parseInt(puzzleSize)}
+          onReset={() => setPuzzleSize("")}
+        />
       ) : (
         <WelcomeForm onSubmit={setPuzzleSize} />
       )}

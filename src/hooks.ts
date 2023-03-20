@@ -20,6 +20,7 @@ export const useShuffledTiles = (puzzleSize: number) => {
   const shuffle = () => {
     const { shuffledTiles, gapIndex } = shuffleTiles(tiles);
     setGapIndex(gapIndex);
+    setIsSolved(false);
     setTiles(shuffledTiles);
     setMoves(0);
   };
