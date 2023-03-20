@@ -50,11 +50,6 @@ export const SlidingPuzzle: React.FC<SlidingPuzzleProps> = (props) => {
         } ${puzzleSize}x${puzzleSize} Sliding Puzzle Challenge`}
       </PrimaryTitle>
       <SecondaryTitle theme={theme}>Moves: {moves}</SecondaryTitle>
-      {isSolved && !shouldAnimate ? (
-        <SecondaryTitle theme={theme}>
-          Congrats! You've Just Solved The Puzzle!
-        </SecondaryTitle>
-      ) : (
         <PuzzleGrid puzzleSize={puzzleSize} style={puzzleGridAnimation}>
           {tiles.map((value, index) =>
             index === gapIndex ? (
@@ -64,15 +59,13 @@ export const SlidingPuzzle: React.FC<SlidingPuzzleProps> = (props) => {
                 key={index}
                 puzzleSize={puzzleSize}
                 backgroundColor={tileColor}
-                onClick={() => moveTile(index)}
+                onClick={() => !isSolved && moveTile(index)}
               >
                 {value + 1}
               </Tile>
             )
           )}
         </PuzzleGrid>
-      )}
-
       <VerticalSpacer />
       {/* As an improvement, an option to restart the existing puzzle can be added in the future*/}
       <Button onClick={shuffle} variant="contained" color="primary">
