@@ -16,10 +16,9 @@ export const VerticalSpacer = styled.div<{ size?: number }>`
 `;
 
 export const PrimaryTitle = styled.h2`
-color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.primary.main};
 `;
 
 export const SecondaryTitle = styled.h4`
-color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
-

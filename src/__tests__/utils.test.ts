@@ -1,56 +1,68 @@
-import { isSolvable, shuffleTiles, isPuzzleSolved } from "../utils";
+import {
+  countInversions,
+  isSolvable,
+  shuffleTiles,
+  isPuzzleSolved,
+} from "../utils";
 
-describe("isSolvable", () => {
-  it("returns true if number of inversions is even", () => {
-    const tiles = [1, 2, 3, 4, 5, 6, 0, 7, 8];
-    expect(isSolvable(tiles)).toBe(true);
+describe("countInversions", () => {
+  it("returns the correct number of inversions for an array", () => {
+    const tiles = [3, 5, 2, 8, 4, 1, 7, 6, 0];
+    const numInversions = countInversions(tiles);
+    expect(numInversions).toBe(12);
   });
 
-  it("returns false if number of inversions is odd", () => {
-    const tiles = [1, 2, 3, 4, 5, 6, 0, 8, 7];
-    expect(isSolvable(tiles)).toBe(false);
+  it("returns 0 for an already sorted array", () => {
+    const tiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+    const numInversions = countInversions(tiles);
+    expect(numInversions).toBe(0);
+  });
+
+  it("returns 0 for an empty array", () => {
+    const tiles: number[] = [];
+    const numInversions = countInversions(tiles);
+    expect(numInversions).toBe(0);
+  });
+});
+
+describe("isSolvable", () => {
+  it("returns true for solvable puzzles", () => {
+    const tiles = [1, 3, 5, 2, 4, 6, 8, 7, 0];
+    const gapIndex = 8;
+    expect(isSolvable(tiles, gapIndex)).toBe(true);
+  });
+
+  it("returns false for unsolvable puzzles", () => {
+    const tiles = [1, 2, 3, 4, 5, 6, 8, 7, 0];
+    const gapIndex = 8;
+    expect(isSolvable(tiles, gapIndex)).toBe(false);
   });
 });
 
 describe("shuffleTiles", () => {
-  it("returns shuffled tiles if the puzzle is solvable", () => {
-    const initialTiles = [1, 2, 3, 4, 5, 6, 0, 7, 8];
-    const shuffledTiles = shuffleTiles(initialTiles);
+  it("should shuffle the tiles and return the gap index", () => {
+    const initialTiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    const { shuffledTiles, gapIndex } = shuffleTiles(initialTiles);
     expect(shuffledTiles).not.toEqual(initialTiles);
-    expect(isSolvable(shuffledTiles)).toBe(true);
+    expect(gapIndex).not.toEqual(8);
   });
 
-  it("retries shuffling if the puzzle is not solvable", () => {
-    const initialTiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
-    jest.spyOn(global.Math, "random").mockReturnValueOnce(0.5);
-    jest.spyOn(global.Math, "random").mockReturnValueOnce(0.5);
-    jest.spyOn(global.Math, "random").mockReturnValueOnce(0.5);
-    jest.spyOn(global.Math, "random").mockReturnValueOnce(0.5);
-    const shuffledTiles = shuffleTiles(initialTiles);
-    expect(shuffledTiles).not.toEqual(initialTiles);
-    expect(isSolvable(shuffledTiles)).toBe(true);
+  it("should return the initial tiles and gap index if attempts > 5", () => {
+    const initialTiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    const { shuffledTiles, gapIndex } = shuffleTiles(initialTiles, 6);
+    expect(shuffledTiles).toEqual(initialTiles);
+    expect(gapIndex).toBe(8);
   });
 });
 
 describe("isPuzzleSolved", () => {
-  it("returns true if all tiles are in their correct positions", () => {
-    const moves = 5;
-    const puzzleSize = 3;
+  it("returns true for a solved puzzle", () => {
     const tiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    expect(isPuzzleSolved(moves, puzzleSize, tiles)).toBe(true);
+    expect(isPuzzleSolved(tiles)).toBe(true);
   });
 
-  it("returns false if some tiles are not in their correct positions", () => {
-    const moves = 10;
-    const puzzleSize = 3;
-    const tiles = [0, 1, 2, 3, 4, 5, 6, 8, 7];
-    expect(isPuzzleSolved(moves, puzzleSize, tiles)).toBe(false);
-  });
-
-  it("returns false if number of moves is less than minimum required", () => {
-    const moves = 3;
-    const puzzleSize = 3;
-    const tiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    expect(isPuzzleSolved(moves, puzzleSize, tiles)).toBe(false);
+  it("returns false for an unsolved puzzle", () => {
+    const tiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+    expect(isPuzzleSolved(tiles)).toBe(false);
   });
 });

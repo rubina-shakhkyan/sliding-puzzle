@@ -4,10 +4,10 @@ import { Color } from "./Color";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: Color.PURPLE1, 
+      main: Color.PURPLE1,
     },
     secondary: {
-      main: Color.PURPLE2, 
+      main: Color.PURPLE2,
     },
     background: {
       default: Color.WHITE,

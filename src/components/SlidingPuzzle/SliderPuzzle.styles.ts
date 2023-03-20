@@ -41,4 +41,3 @@ export const Gap = styled.div`
   background-color: transparent;
   border: none;
 `;
-

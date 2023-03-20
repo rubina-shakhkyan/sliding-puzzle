@@ -1,6 +1,6 @@
-import { ThemeProvider } from '@mui/material/styles';
-import { PrimaryTitle, SecondaryTitle } from '../components/shared/shared.styles';
-import { theme } from '../design-system';
+import { ThemeProvider } from "@mui/material/styles";
+import { PrimaryTitle, SecondaryTitle } from "../design-system/shared.styles";
+import { theme } from "../design-system";
 
 export const PrimaryTitleStory = () => (
   <ThemeProvider theme={theme}>

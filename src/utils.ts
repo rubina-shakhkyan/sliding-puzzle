@@ -1,46 +1,63 @@
-//   The puzzle is is solvable, if the number of inversions is even given that the gap is always in the last row initially
-// ToDo: Random start locations - so the gap can be in any row
-// Not working correctly 2x2
-export const isSolvable = (tiles: number[]) => {
-  const puzzleSize = Math.sqrt(tiles.length);
-  const numInversions = tiles.reduce((acc, tile, index) => {
-    if (tile === 0 || index >= puzzleSize * (puzzleSize - 1)) {
-      return acc;
+import { PuzzleState } from "./models";
+
+export const countInversions = (tiles: number[]) => {
+  let inversions = 0;
+  for (let i = 0; i < tiles.length; i++) {
+    for (let j = i + 1; j < tiles.length; j++) {
+      if (tiles[i] && tiles[j] && tiles[i] > tiles[j]) {
+        inversions++;
+      }
     }
-    const numTilesAfter = tiles.slice(index + 1).filter((t) => t !== 0);
-    const inv = numTilesAfter.reduce((a, t) => a + (tile > t ? 1 : 0), 0);
-    return acc + inv;
-  }, 0);
-
-  return numInversions % 2 === 0;
+  }
+  return inversions;
 };
 
-export const shuffleTiles = (initialTiles: number[]): number[] => {
-  let newTiles = [...initialTiles];
-  newTiles.sort(() => Math.random() - 0.5);
-  if (isSolvable(newTiles)) {
-    return newTiles;
-  } else return shuffleTiles(initialTiles);
+export const isSolvable = (tiles: number[], gapIndex: number): boolean => {
+  const puzzleSize = Math.sqrt(tiles.length);
+  const numInversions = countInversions(tiles);
+  if (puzzleSize % 2 === 1) {
+    // Odd puzzle size, so solvable if even inversions
+    return numInversions % 2 === 0;
+  } else {
+    // Even puzzle size
+    const blankRow = Math.floor(gapIndex / puzzleSize);
+    if (blankRow % 2 === 0) {
+      return numInversions % 2 === 1;
+    } else {
+      return numInversions % 2 === 0;
+    }
+  }
 };
 
-export const isPuzzleSolved = (
-  moves: number,
-  puzzleSize: number,
-  tiles: number[]
-) => {
-  const lastTileIndex = puzzleSize * puzzleSize - 1;
-  const minMoves =
-    puzzleSize % 2 === 0 ? (puzzleSize - 1) * 2 : (puzzleSize - 1) * 2 - 1;
+export const shuffleTiles = (
+  initialTiles: number[],
+  attempts: number = 0
+): PuzzleState => {
+  if (attempts > 5)
+    return { shuffledTiles: initialTiles, gapIndex: initialTiles.length - 1 };
+  let shuffledTiles = [...initialTiles];
 
-  if (moves < minMoves) {
-    return false;
+  // Used Fisher-Yates algorithm to increase the probability that the Puzzle is solvable
+  for (let i = shuffledTiles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledTiles[i], shuffledTiles[j]] = [shuffledTiles[j], shuffledTiles[i]];
   }
 
+  //   The gap is actually the element with the highest key
+  const gapIndex = shuffledTiles.indexOf(shuffledTiles.length - 1);
+  if (isSolvable(shuffledTiles, gapIndex)) {
+    return { shuffledTiles, gapIndex };
+  } else {
+    attempts++;
+    return shuffleTiles(initialTiles, attempts);
+  }
+};
+
+export const isPuzzleSolved = (tiles: number[]) => {
   for (let i = 0; i < tiles.length; i++) {
     if (tiles[i] !== i) {
       return false;
     }
   }
-
-  return tiles[lastTileIndex] === lastTileIndex;
+  return true;
 };

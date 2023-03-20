@@ -1,6 +1,16 @@
 import React, { useState } from "react";
-import { Container, PrimaryTitle, VerticalSpacer } from "../shared/shared.styles";
-import { Button, FormControl, FormGroup, TextField, useTheme } from "@mui/material";
+import {
+  Container,
+  PrimaryTitle,
+  VerticalSpacer,
+} from "../../design-system/shared.styles";
+import {
+  Button,
+  FormControl,
+  FormGroup,
+  TextField,
+  useTheme,
+} from "@mui/material";
 
 interface WelcomeFormProps {
   onSubmit(puzzleSize: string): void;
@@ -15,12 +25,13 @@ export const WelcomeForm = ({ onSubmit }: WelcomeFormProps) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPuzzleSize(event.target.value);
-    
   };
 
   return (
     <Container>
-      <PrimaryTitle theme={theme}>Welcome To The Sliding Puzzle Challenge!</PrimaryTitle>
+      <PrimaryTitle theme={theme}>
+        Welcome To The Sliding Puzzle Challenge!
+      </PrimaryTitle>
       <VerticalSpacer size={36} />
       <FormControl component="form" onSubmit={handleSubmit}>
         <FormGroup>
@@ -30,7 +41,7 @@ export const WelcomeForm = ({ onSubmit }: WelcomeFormProps) => {
             helperText="Please enter a number between 3 and 20"
             required
             inputProps={{
-              min: 3,
+              min: 2,
               max: 20,
             }}
             value={puzzleSize}

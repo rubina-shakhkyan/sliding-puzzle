@@ -2,7 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button, useTheme } from "@mui/material";
 import { Gap, PuzzleGrid, Tile } from "./SliderPuzzle.styles";
 import { useShuffledTiles } from "../../hooks";
-import { Container, PrimaryTitle, SecondaryTitle, VerticalSpacer } from "../shared/shared.styles";
+import {
+  Container,
+  PrimaryTitle,
+  SecondaryTitle,
+  VerticalSpacer,
+} from "../../design-system/shared.styles";
 import { config, useSpring } from "react-spring";
 import { SOLVED_PUZZLE, START_SOLVING } from "../../constants";
 
@@ -10,7 +15,7 @@ export const SlidingPuzzle: React.FC<{ puzzleSize: number }> = ({
   puzzleSize = 4,
 }) => {
   const theme = useTheme();
-  const { emptyIndex, isSolved, moves, tiles, moveTile, shuffle } =
+  const { gapIndex, isSolved, moves, tiles, moveTile, shuffle } =
     useShuffledTiles(puzzleSize);
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
@@ -35,7 +40,7 @@ export const SlidingPuzzle: React.FC<{ puzzleSize: number }> = ({
 
   return (
     <Container>
-    <PrimaryTitle  theme={theme}>
+      <PrimaryTitle theme={theme}>
         {`${
           isSolved ? SOLVED_PUZZLE : START_SOLVING
         } ${puzzleSize}x${puzzleSize} Sliding Puzzle Challenge`}
@@ -43,7 +48,7 @@ export const SlidingPuzzle: React.FC<{ puzzleSize: number }> = ({
       <SecondaryTitle theme={theme}>Moves: {moves}</SecondaryTitle>
       <PuzzleGrid puzzleSize={puzzleSize} style={puzzleGridAnimation}>
         {tiles.map((value, index) =>
-          index === emptyIndex ? (
+          index === gapIndex ? (
             <Gap key={index} />
           ) : (
             <Tile
