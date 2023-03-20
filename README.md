@@ -1,6 +1,6 @@
 # Sliding Puzzle project with React JS
 
-    The project includes 2 main components, which are:
+ The project includes 2 main components, which are:
 - **The Form Component**:
     This component displays a number input to enter the dimensions of the sliding puzzle. By pressing the button you can submit the form and start the game.
 
