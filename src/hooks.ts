@@ -39,10 +39,10 @@ export const useShuffledTiles = (puzzleSize: number) => {
     if (isAdjacent(index)) {
       const newTiles = [...tiles];
       newTiles[gapIndex] = newTiles[index];
-      newTiles[index] = puzzleSize * puzzleSize - 1;
+      newTiles[index] = tiles[gapIndex];
       setTiles(newTiles);
       setGapIndex(index);
-      setIsSolved(isPuzzleSolved(tiles));
+      setIsSolved(isPuzzleSolved(newTiles));
       setMoves(moves + 1);
     }
   };

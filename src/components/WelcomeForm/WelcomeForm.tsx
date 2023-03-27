@@ -41,7 +41,7 @@ export const WelcomeForm = ({ onSubmit }: WelcomeFormProps) => {
             helperText="Please enter a number between 3 and 20"
             required
             inputProps={{
-              min: 2,
+              min: 3,
               max: 20,
             }}
             value={puzzleSize}

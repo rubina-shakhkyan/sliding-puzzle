@@ -20,7 +20,8 @@ export const isSolvable = (tiles: number[], gapIndex: number): boolean => {
     return numInversions % 2 === 0;
   } else {
     // Even puzzle size
-    const blankRow = Math.floor(gapIndex / puzzleSize);
+    // The blank row counting from the bottom
+    const blankRow = puzzleSize - Math.floor(gapIndex / puzzleSize);
     if (blankRow % 2 === 0) {
       return numInversions % 2 === 1;
     } else {
@@ -33,8 +34,9 @@ export const shuffleTiles = (
   initialTiles: number[],
   attempts: number = 0
 ): PuzzleState => {
-  if (attempts > 5)
+  if (attempts > 5) {
     return { shuffledTiles: initialTiles, gapIndex: initialTiles.length - 1 };
+  }
   let shuffledTiles = [...initialTiles];
 
   // Used Fisher-Yates algorithm to increase the probability that the Puzzle is solvable
